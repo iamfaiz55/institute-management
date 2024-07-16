@@ -6,6 +6,11 @@ const { adminProtected } = require("./middleware/adminProtected")
 // const { adminProtected } =   require("./middleware/adminProtected")
 require("dotenv").config()
 
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+
+
 mongoose.connect(process.env.MONGO_URL)
 const app = express()
 app.use(express.json())
@@ -22,9 +27,11 @@ app.use("/api/skillhub/student", require("./routes/user.routes"))
 app.use("/api/skillhub/auth", require("./routes/admin.auth.route"))
 app.use("/api/skillhub",adminProtected, require("./routes/admin.routes"))
 
-app.use("*", (req, res)=> {
-    res.status(404).json({message:"Resoure Not Found"})
-})
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
+  
 
 app.use((err, req, res, next)=>{
     console.log(err);
