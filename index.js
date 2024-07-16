@@ -12,7 +12,7 @@ app.use(express.json())
 app.use(express.static("uploads"))
 app.use(express.static("public"))
 app.use(cors({
-    origin: "*",
+    origin: "https://institute-management-oa5o.onrender.com",
     credentials:true
 }))
 app.use(cookieparser())
