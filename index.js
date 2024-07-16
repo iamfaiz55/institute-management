@@ -7,13 +7,13 @@ const { adminProtected } = require("./middleware/adminProtected")
 require("dotenv").config()
 
 
-app.use(express.static(path.join(__dirname, 'build')));
 
 
 
 mongoose.connect(process.env.MONGO_URL)
 const app = express()
 app.use(express.json())
+app.use(express.static(path.join(__dirname, 'build')));
 app.use(express.static("uploads"))
 app.use(express.static("public"))
 app.use(cors({
