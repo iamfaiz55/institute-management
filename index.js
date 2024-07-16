@@ -1,9 +1,9 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
+const path = require("path")
 const cookieparser = require("cookie-parser")
 const { adminProtected } = require("./middleware/adminProtected")
-// const { adminProtected } =   require("./middleware/adminProtected")
 require("dotenv").config()
 
 
@@ -25,7 +25,8 @@ app.use("/api/skillhub/auth", require("./routes/admin.auth.route"))
 app.use("/api/skillhub",adminProtected, require("./routes/admin.routes"))
 
 app.use("*", (req, res)=> {
-    res.status(404).json({message:"Resoure Not Found"})
+    res.sendFile(path.join(__dirname,"public","index.html"))
+    // res.status(404).json({message:"Resoure Not Found"})
 })
 
 app.use((err, req, res, next)=>{
