@@ -15,7 +15,7 @@ app.use(express.static("uploads"))
 app.use(express.static("public"))
 app.use(cors({
     // origin: "https://institute-management-oa5o.onrender.com",
-    origin: "*",
+    origin: "http://localhost:5173",
     credentials:true
 }))
 app.use(cookieparser())
