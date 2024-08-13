@@ -12,6 +12,7 @@ routes
 
       // student 2
      .get("/getAllStudents", adminControllers.getAllStudent)
+     .post("/addStudentManually", adminControllers.addStudentManual)
      .get("/getSingleStudent/:student", adminControllers.getSingleStudent)
      .put("/disableStudent/:id", adminControllers.disableStudent)
      .put("/unableStudent/:id", adminControllers.unableStudent)

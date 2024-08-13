@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler")
+const bcrypt = require("bcryptjs")
 
 const Course = require("../models/Course")
 const Student = require("../models/Student")
@@ -11,6 +12,7 @@ const Fees = require("../models/Fees");
 const Enroll = require("../models/Enroll");
 
 const sendEmail = require("../utils/email");
+const { checkEmpty } = require("../utils/checkEmpty");
 
 
 
@@ -254,6 +256,25 @@ exports.unableStudent = asyncHandler(async(req, res)=> {
      await Student.findByIdAndUpdate(id, { isDeleted:true})
     res.json({message:"Student Unabled Success"})
 })
+
+exports.addStudentManual = asyncHandler(async(req, res)=> {
+  const {name , email, password }=req.body
+  // const { name, email, password } = req.body
+  const { isError, error } = checkEmpty({ name, email, password })
+  if (isError) {
+      return res.status(400).json({ message: "All Feilds Required", error })
+  }
+
+  const isFound = await Student.findOne({ email })
+  if (isFound) {
+      return res.status(400).json({ message: "email already registered with us" })
+  }
+  const hash = await bcrypt.hash(password, 10)
+  await Student.create({ name, email, password: hash })
+
+  res.json({ message: "Register Success" })
+})
+
 
 
 

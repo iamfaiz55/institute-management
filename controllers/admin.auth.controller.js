@@ -51,16 +51,13 @@ exports.registerAdmin = asyncHandler(async(req, res)=>{
   
   exports.verifyOTP = asyncHandler(async(req, res)=> {
     const { email, otp } = req.body
-    console.log(req.body);
+    // console.log(req.body);
     const {isError, error}= checkEmpty({otp})
     if(isError){
         return res.status(400).json({message:"All Fields required", error})
     }
     const result = await Admin.findOne({email})
-       if(!result){
-           return res.status(400).json({message:"Invalid Credential - Email Not Found"})
-       }
-  // console.log(result.otp, otp);
+       // console.log(result.otp, otp);
        if(result.otp !== otp){
         return res.status(400).json({message:"Invalid OTP"})
        }
